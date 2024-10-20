@@ -1,0 +1,72 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}{{ tour.title }}{% endblock %}
+
+{% block content %}
+
+<body>
+    <section class="detail_rubric">
+        <div class="detail_rubric__wrapper">
+            <img src="{{ tour.image }}" alt="{{ tour.title }}">
+        </div>
+        <div class="detail_rubric__container">
+            <div class="detail_rubric__block-one">
+                <div class="detail_rubric__title">{{ tour.title }}</div>
+                <div class="detail_rubric__country">{{ tour.town }}</div>
+            </div>
+            <div class="detail_rubric__block-two">
+                <div class="detail_rubric__nights">{{ tour.nights }}</div>
+                <div class="detail_rubric__stars">{{ tour.stars }}</div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="detail_rubric__text">
+                {{ tour.description }}
+            </div>
+            <div class="price">
+                {% if tour.price == "Не указано" %}
+                {{tour.price}}
+                {% else %}
+                {{ tour.price }} &#8376
+                {% endif %}
+            </div>
+            <p><strong>Дата публикации: </strong>{{ tour.created_at|date:"d.m.y" }}</p>
+        </div>
+    </section>
+    <section class="selection_tours-section">
+        <div class="container">
+            <div class="selection_tours__title">
+                <div class="main_title">Все туры</div> 
+            </div>
+            <div class="selection_tour">
+                {% for t in tours %}
+                <a href="{% url 'tour_detail_page' pk=t.pk %}" style="text-decoration: none; color: rgb(42, 42, 42);">
+                    <div class="selection_tour__container">
+                        <div class="selection_tour__wrapper">
+                            <img src="{{ t.image }}" alt="{{ t.title }}" class="selection_tour__img">
+                        </div>
+                        <div class="selection_tour__block">
+                            <div class="selection_tour__text">
+                                <div class="h2">{{ t.title|truncatewords:2 }}</div> <!-- truncatechars - срезнает буквы -->
+                                <div class="grey_text">{{ t.category }}, <span class="grey_text">{{ t.town }}</span></div>
+                                <div class="stars">{{ t.stars }}</div>
+                                <div class="nights">{{ t.nights }}</div>
+                            </div>
+                            <div class="price">
+                                {% if t.price == "Не указано" %}
+                                {{t.price}}
+                                {% else %}
+                                {{ t.price }} &#8376
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+{% endblock %}

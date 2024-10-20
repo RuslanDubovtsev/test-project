@@ -1,0 +1,29 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Все категории{% endblock %}
+
+{% block content %}
+
+<body>
+    <section class="tours_rubrics">
+        <div class="container">
+            <div class="title_component">
+                <span class="main_title">Горячие туры</span>
+                <span class="fire_frame"><img src="{% static './images/fire.svg' %}"></span>
+            </div>
+            <div class="tours_rubrics__row">
+                {% for c in categories %}
+                <a href="{% url 'tours_by_category_page' slug=c.slug %}" style="text-decoration: none; color: rgb(42, 42, 42);">
+                    <div class="tours_rubrics__block">
+                        <img class="tours_rubrics__img" src="{{ c.image }}" alt="{{ c.name }}"/>
+                        <div class="tours_rubrics__title">{{ c.name }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>              
+        </div>
+    </section>
+</body>
+</html>
+{% endblock %}

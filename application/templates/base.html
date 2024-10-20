@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="frame-header">
+            <div class="frame-header__block">
+                <div class="frame-header__background"></div>
+                <div class="frame-header__title">Bright Sunny Tour</div>
+            </div>
+        </div>
+        <div class="header_menu">
+            <div class="container">
+                <div class="header_menu__block">
+                    <div class="menu-button" onclick="burgerMenuAction()">
+                        <img src="{% static './images/menu.svg' %}" alt="меню"/>
+                    </div>
+                    <div class="header_menu__greeting">
+                        Добро пожаловать!
+                    </div>
+                    <div></div> 
+                </div>
+            </div>
+        </div>
+    </header>
+    <div id="modal-window" style="display: none;">
+        <div class="container">
+            <div class="back"><a href="{% url 'home_page' %}" class="modal-window__title">Главная</a></div>
+            <hr>
+            <div class="modal-window__categories"><a href="{% url 'tours_page' %}" class="modal-window__title">Туры</a></div>
+            <hr>
+            <div class="modal-window__categories"><a href="{% url 'categories_page' %}" class="modal-window__title">Категории</a></div>
+            <hr>
+            <div class="modal-window__categories"><a href="{% url 'create_tour' %}" class="modal-window__title">Добавить тур</a></div>
+            <hr>
+            {% if not user.is_authenticated %}
+            <div class="modal-window__sign_up"><a href="{% url 'sign_up_page' %}" class="modal-window__title">Регистрация</a></div>
+            <hr>
+            <div class="modal-window__login"><a href="{% url 'login_page' %}" class="modal-window__title">Войти</a></div>
+            <hr>
+            {% else %}
+            <div class="modal-window__logout"><a href="{% url 'logout_page' %}" class="modal-window__title">Выйти ({{ user.username }})</a></div>
+            <hr>
+            {% endif %}
+        </div>
+    </div>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
+
+<script src="{% static './js/script.js' %}"></script>

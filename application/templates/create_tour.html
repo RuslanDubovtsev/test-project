@@ -1,0 +1,16 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<section class="auth">
+    <form method="post">
+        <h2 style="margin-top: 0;">Добавить тур-поездку</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="add" type="submit">Создать</button>
+    </form>
+</section>
+
+{% endblock %}

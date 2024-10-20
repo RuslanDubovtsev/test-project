@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+
+<body>
+    <section class="tours_rubrics">
+        <div class="container">
+            <div class="title_component">
+                <span class="main_title">Горячие туры</span>
+                <span class="fire_frame"><img src="{% static './images/fire.svg' %}"></span>
+            </div>
+            <div class="tours_rubrics__row">
+                {% for c in categories %}
+                <a href="{% url 'tours_by_category_page' slug=c.slug %}" style="text-decoration: none; color: rgb(42, 42, 42);">
+                    <div class="tours_rubrics__block">
+                        <img class="tours_rubrics__img" src="{{ c.image }}" alt="{{ c.name }}"/>
+                        <div class="tours_rubrics__title">{{ c.name }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>              
+        </div>
+    </section>
+    <section class="selection_tours-section">
+        <div class="tours_rubrics__button">
+            <div>
+                <a href="{% url 'categories_page' %}">
+                    <button class="button">
+                        <div class="button_text">Другие страны ></div>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="selection_tours__title">
+                <div class="main_title">Подборка туров</div> 
+            </div>
+            <div class="selection_tour">
+                {% for tour in tours %}
+                <a href="{% url 'tour_detail_page' pk=tour.pk %}" style="text-decoration: none; color: rgb(42, 42, 42);">
+                    <div class="selection_tour__container">
+                        <div class="selection_tour__wrapper">
+                            <img src="{{ tour.image }}" alt="{{ tour.title }}" class="selection_tour__img">
+                        </div>
+                        <div class="selection_tour__block">
+                            <div class="selection_tour__text">
+                                <div class="h2">{{ tour.title }}</div>
+                                <div class="grey_text">{{ tour.category }}, <span class="grey_text">{{ tour.town }}</span></div>
+                                <div class="stars">{{ tour.stars }}</div>
+                                <div class="nights">{{ tour.nights }}</div>
+                            </div>
+                            <div class="price">
+                                {% if tour.price == "Не указано" %}
+                                {{tour.price}}
+                                {% else %}
+                                {{ tour.price }} &#8376
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="tours_rubrics__button">
+                <div>
+                    <a href="{% url 'tours_page' %}">
+                        <button class="button">
+                            <div class="button_text">Другие туры ></div>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+{% endblock %}

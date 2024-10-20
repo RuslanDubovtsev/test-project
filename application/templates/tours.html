@@ -1,0 +1,44 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block title %}Все туры{% endblock %}
+
+{% block content %}
+
+<body>
+    <section class="selection_tours-section">
+        <div class="container">
+            <div class="selection_tours__title">
+                <div class="main_title">Все туры</div> 
+            </div>
+            <div class="selection_tour">
+                {% for tour in tours %}
+                <a href="{% url 'tour_detail_page' pk=tour.pk %}" style="text-decoration: none; color: rgb(42, 42, 42);">
+                    <div class="selection_tour__container">
+                        <div class="selection_tour__wrapper">
+                            <img src="{{ tour.image }}" alt="{{ tour.title }}" class="selection_tour__img">
+                        </div>
+                        <div class="selection_tour__block">
+                            <div class="selection_tour__text">
+                                <div class="h2">{{ tour.title|truncatewords:2 }}</div> <!-- truncatechars - срезнает буквы -->
+                                <div class="grey_text">{{ tour.category }}, <span class="grey_text">{{ tour.town }}</span></div>
+                                <div class="stars">{{ tour.stars }}</div>
+                                <div class="nights">{{ tour.nights }}</div>
+                            </div>
+                            <div class="price">
+                                {% if tour.price == "Не указано" %}
+                                {{tour.price}}
+                                {% else %}
+                                {{ tour.price }} &#8376
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+{% endblock %}
